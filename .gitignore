@@ -1,0 +1,7 @@
+*.egg*
+*.py[cod]
+.coverage
+.pytest_cache
+build
+dist
+htmlcov

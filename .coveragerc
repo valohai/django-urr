@@ -1,0 +1,6 @@
+[run]
+omit =
+    *site-packages*
+    setup.py
+    manage.py
+    urrtests/wsgi.py
