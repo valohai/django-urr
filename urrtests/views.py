@@ -1,1 +1,2 @@
-test_view = lambda request, **kwargs: None
+def test_view(request, *args, **kwargs):
+    pass
