@@ -40,6 +40,10 @@ class URLEntry:
         keys = (re.groupindex.keys() for re in self.regexes)
         return set(itertools.chain(*keys))
 
+    @cached_property
+    def group_count(self):
+        return sum(re.groups for re in self.regexes)
+
 
 def _extract_urls(urlpatterns, parents):
     for pattern in urlpatterns:

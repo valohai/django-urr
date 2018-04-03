@@ -8,4 +8,5 @@ urlpatterns = [
     path('unnamed/<a>/<b>/', test_view),
     path('test1/<a>/<b>/<int:c>/', test_view, name='test1'),
     re_path(r'test2/(?P<a>.+?)/(?P<b>.+?)/(?P<c>\d+?)/', test_view, name='test2'),
+    re_path(r'test3/(.+?)/(.+?)/(\d+?)/', test_view, name='test3'),
 ]

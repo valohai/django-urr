@@ -11,13 +11,14 @@ def urls_by_qname():
 
 def test_qnames():
     for entry in extract_urls():
-        if entry.name and not entry.named_groups:
+        if entry.name and not entry.named_groups and not entry.group_count:
             assert reverse(entry.qualified_name)
 
 
 def test_named_groups(urls_by_qname):
     assert urls_by_qname['test1'].named_groups == {'a', 'b', 'c'}
     assert urls_by_qname['test2'].named_groups == {'a', 'b', 'c'}
+    assert urls_by_qname['test3'].group_count == 3 and not urls_by_qname['test3'].named_groups
 
 
 def test_merged_pattern(urls_by_qname):
