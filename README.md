@@ -9,8 +9,6 @@ the URL resolver(s) in Django projects.
 We use urr to auto-generate smoke tests for all URLs in the project,
 but you might come up with other uses. Who knows!
 
-:point_right: Note that urr is currently only compatible with Django 2+.
-
 Installation
 ------------
 

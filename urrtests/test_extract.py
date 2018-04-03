@@ -22,8 +22,14 @@ def test_named_groups(urls_by_qname):
 
 
 def test_merged_pattern(urls_by_qname):
-    assert urls_by_qname['admin:auth_user_change'].merged_pattern == r'admin\/auth\/user\/(?P<object_id>.+)\/change\/'
-    assert urls_by_qname['test1'].merged_pattern == r'test1\/(?P<a>[^/]+)\/(?P<b>[^/]+)\/(?P<c>[0-9]+)\/'
+    assert urls_by_qname['admin:auth_user_change'].merged_pattern in (
+        r'admin\/auth\/user\/(?P<object_id>.+)\/change\/',  # Django 2
+        r'admin/auth/user/(.+)/change/',  # Django 1.11
+    )
+    assert urls_by_qname['test1'].merged_pattern in (
+        r'test1\/(?P<a>[^/]+)\/(?P<b>[^/]+)\/(?P<c>[0-9]+)\/',  # Django 2
+        r'test1/(?P<a>.+?)/(?P<b>.+?)/(?P<c>[0-9]+?)/',  # Django 1.11
+    )
 
 
 def test_normalize(urls_by_qname):
@@ -32,7 +38,7 @@ def test_normalize(urls_by_qname):
 
 def test_unnamed_url_enumeration():
     assert any(
-        e.merged_pattern.startswith(r'unnamed\/') and not e.name
+        e.merged_pattern.startswith(r'unnamed') and not e.name
         for e
         in extract_urls()
     )

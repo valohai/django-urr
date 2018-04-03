@@ -1,8 +1,15 @@
 import itertools
 
-from django.urls import get_resolver, URLResolver
+import django.urls as urls
 from django.utils.functional import cached_property
 from django.utils.regex_helper import normalize
+
+try:  # Django 2.0
+    url_resolver_types = (urls.URLResolver,)
+    DJANGO_2 = True
+except AttributeError:  # Django 1.11
+    url_resolver_types = (urls.RegexURLResolver,)
+    DJANGO_2 = False
 
 
 class URLEntry:
@@ -25,7 +32,10 @@ class URLEntry:
 
     @cached_property
     def regexes(self):
-        return [bit.pattern.regex for bit in self.bits]
+        if DJANGO_2:
+            return [bit.pattern.regex for bit in self.bits]
+        else:
+            return [bit.regex for bit in self.bits]
 
     @cached_property
     def merged_pattern(self):
@@ -48,7 +58,7 @@ class URLEntry:
 def _extract_urls(urlpatterns, parents):
     for pattern in urlpatterns:
         path = parents[:] + [pattern]
-        if isinstance(pattern, URLResolver):
+        if isinstance(pattern, url_resolver_types):
             yield from _extract_urls(pattern.url_patterns, path)
         else:
             yield URLEntry(path)
@@ -66,5 +76,5 @@ def extract_urls(urlpatterns=None):
     :rtype: list[URLEntry]
     """
     if urlpatterns is None:
-        urlpatterns = get_resolver(None).url_patterns
+        urlpatterns = urls.get_resolver(None).url_patterns
     yield from _extract_urls(urlpatterns, [])
