@@ -4,7 +4,7 @@ import django.urls as urls
 from django.utils.functional import cached_property
 from django.utils.regex_helper import normalize
 
-try:  # Django 2.0
+try:  # Django 2.0+
     url_resolver_types = (urls.URLResolver,)
     DJANGO_2 = True
 except AttributeError:  # Django 1.11

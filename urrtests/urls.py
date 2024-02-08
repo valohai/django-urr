@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.contrib import admin
 
 from urrtests.views import test_view
@@ -14,6 +13,8 @@ try:
         re_path(r"test3/(.+?)/(.+?)/(\d+?)/", test_view, name="test3"),
     ]
 except ImportError:  # Django 1.11
+    from django.conf.urls import url
+
     urlpatterns = [
         url("admin/", admin.site.urls),
         url("unnamed/(?P<a>.+?)/(?P<b>.+?)/", test_view),

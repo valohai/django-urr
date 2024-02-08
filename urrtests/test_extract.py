@@ -23,10 +23,12 @@ def test_named_groups(urls_by_qname):
 
 def test_merged_pattern(urls_by_qname):
     assert urls_by_qname["admin:auth_user_change"].merged_pattern in (
+        r"admin/auth/user/(?P<object_id>.+)/change/\Z",  # Django 3.2+
         r"admin\/auth\/user\/(?P<object_id>.+)\/change\/",  # Django 2
         r"admin/auth/user/(.+)/change/",  # Django 1.11
     )
     assert urls_by_qname["test1"].merged_pattern in (
+        r"test1/(?P<a>[^/]+)/(?P<b>[^/]+)/(?P<c>[0-9]+)/\Z",  # Django 3.2+
         r"test1\/(?P<a>[^/]+)\/(?P<b>[^/]+)\/(?P<c>[0-9]+)\/",  # Django 2
         r"test1/(?P<a>.+?)/(?P<b>.+?)/(?P<c>[0-9]+?)/",  # Django 1.11
     )

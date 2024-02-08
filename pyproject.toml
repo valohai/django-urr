@@ -8,6 +8,7 @@ dynamic = ["version"]
 description = "URL resolver utilities for Django"
 readme = "README.md"
 license = "MIT"
+requires-python = ">=3.7"
 authors = [
     { name = "Valohai", email = "info@valohai.com" },
 ]
@@ -17,6 +18,9 @@ maintainers = [
 dependencies = [
     "Django",
 ]
+
+[project.optional-dependencies]
+test = ["pytest>=6.0", "pytest-django"]
 
 [project.urls]
 Homepage = "https://github.com/valohai/django-urr"
@@ -30,7 +34,7 @@ include = [
 ]
 
 [tool.pytest.ini_options]
-django_settings_module = "urrtests.settings"
+DJANGO_SETTINGS_MODULE = "urrtests.settings"
 norecursedirs = [".git", ".tox"]
 
 [tool.ruff]
