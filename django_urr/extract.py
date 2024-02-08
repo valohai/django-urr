@@ -1,10 +1,10 @@
 import itertools
 
-import django.urls as urls
+from django import urls
 from django.utils.functional import cached_property
 from django.utils.regex_helper import normalize
 
-try:  # Django 2.0
+try:  # Django 2.0+
     url_resolver_types = (urls.URLResolver,)
     DJANGO_2 = True
 except AttributeError:  # Django 1.11
@@ -17,33 +17,33 @@ class URLEntry:
         self.bits = url_bits[:]
         self.name = url_bits[-1].name
 
+    def __repr__(self):
+        if self.qualified_name:
+            return f"<URLEntry {self.merged_pattern!r} (name: {self.qualified_name!r})>"
+        return f"<URLEntry {self.merged_pattern!r}>"
+
     def normalize(self):
         return normalize(self.merged_pattern)
 
     @cached_property
     def namespace(self):
-        return getattr(self.bits[0], 'namespace', None)
+        return getattr(self.bits[0], "namespace", None)
 
     @cached_property
     def qualified_name(self):
         if self.name and self.namespace:
-            return '{namespace}:{name}'.format(namespace=self.namespace, name=self.name)
+            return f"{self.namespace}:{self.name}"
         return self.name
 
     @cached_property
     def regexes(self):
         if DJANGO_2:
             return [bit.pattern.regex for bit in self.bits]
-        else:
-            return [bit.regex for bit in self.bits]
+        return [bit.regex for bit in self.bits]
 
     @cached_property
     def merged_pattern(self):
-        return ''.join(
-            re.pattern.lstrip('^').rstrip('$')
-            for re
-            in self.regexes
-        )
+        return "".join(re.pattern.lstrip("^").rstrip("$") for re in self.regexes)
 
     @cached_property
     def named_groups(self):
