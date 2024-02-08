@@ -17,6 +17,11 @@ class URLEntry:
         self.bits = url_bits[:]
         self.name = url_bits[-1].name
 
+    def __repr__(self):
+        if self.qualified_name:
+            return f"<URLEntry {self.merged_pattern!r} (name: {self.qualified_name!r})>"
+        return f"<URLEntry {self.merged_pattern!r}>"
+
     def normalize(self):
         return normalize(self.merged_pattern)
 
