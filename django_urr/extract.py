@@ -22,12 +22,12 @@ class URLEntry:
 
     @cached_property
     def namespace(self):
-        return getattr(self.bits[0], 'namespace', None)
+        return getattr(self.bits[0], "namespace", None)
 
     @cached_property
     def qualified_name(self):
         if self.name and self.namespace:
-            return '{namespace}:{name}'.format(namespace=self.namespace, name=self.name)
+            return "{namespace}:{name}".format(namespace=self.namespace, name=self.name)
         return self.name
 
     @cached_property
@@ -39,11 +39,7 @@ class URLEntry:
 
     @cached_property
     def merged_pattern(self):
-        return ''.join(
-            re.pattern.lstrip('^').rstrip('$')
-            for re
-            in self.regexes
-        )
+        return "".join(re.pattern.lstrip("^").rstrip("$") for re in self.regexes)
 
     @cached_property
     def named_groups(self):

@@ -16,29 +16,25 @@ def test_qnames():
 
 
 def test_named_groups(urls_by_qname):
-    assert urls_by_qname['test1'].named_groups == {'a', 'b', 'c'}
-    assert urls_by_qname['test2'].named_groups == {'a', 'b', 'c'}
-    assert urls_by_qname['test3'].group_count == 3 and not urls_by_qname['test3'].named_groups
+    assert urls_by_qname["test1"].named_groups == {"a", "b", "c"}
+    assert urls_by_qname["test2"].named_groups == {"a", "b", "c"}
+    assert urls_by_qname["test3"].group_count == 3 and not urls_by_qname["test3"].named_groups
 
 
 def test_merged_pattern(urls_by_qname):
-    assert urls_by_qname['admin:auth_user_change'].merged_pattern in (
-        r'admin\/auth\/user\/(?P<object_id>.+)\/change\/',  # Django 2
-        r'admin/auth/user/(.+)/change/',  # Django 1.11
+    assert urls_by_qname["admin:auth_user_change"].merged_pattern in (
+        r"admin\/auth\/user\/(?P<object_id>.+)\/change\/",  # Django 2
+        r"admin/auth/user/(.+)/change/",  # Django 1.11
     )
-    assert urls_by_qname['test1'].merged_pattern in (
-        r'test1\/(?P<a>[^/]+)\/(?P<b>[^/]+)\/(?P<c>[0-9]+)\/',  # Django 2
-        r'test1/(?P<a>.+?)/(?P<b>.+?)/(?P<c>[0-9]+?)/',  # Django 1.11
+    assert urls_by_qname["test1"].merged_pattern in (
+        r"test1\/(?P<a>[^/]+)\/(?P<b>[^/]+)\/(?P<c>[0-9]+)\/",  # Django 2
+        r"test1/(?P<a>.+?)/(?P<b>.+?)/(?P<c>[0-9]+?)/",  # Django 1.11
     )
 
 
 def test_normalize(urls_by_qname):
-    assert urls_by_qname['test1'].normalize()[0] == ('test1/%(a)s/%(b)s/%(c)s/', ['a', 'b', 'c'])
+    assert urls_by_qname["test1"].normalize()[0] == ("test1/%(a)s/%(b)s/%(c)s/", ["a", "b", "c"])
 
 
 def test_unnamed_url_enumeration():
-    assert any(
-        e.merged_pattern.startswith(r'unnamed') and not e.name
-        for e
-        in extract_urls()
-    )
+    assert any(e.merged_pattern.startswith(r"unnamed") and not e.name for e in extract_urls())
