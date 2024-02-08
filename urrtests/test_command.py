@@ -6,7 +6,7 @@ from django.core.management import call_command
 from django_urr import extract_urls
 
 
-@pytest.mark.parametrize("format", ("json", "jsonl"))
+@pytest.mark.parametrize("format", ["json", "jsonl"])
 def test_list_command(capsys, format):
     urls = list(extract_urls())
     call_command("urr_list", format=format)

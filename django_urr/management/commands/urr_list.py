@@ -13,8 +13,8 @@ class Command(BaseCommand):
         parser.add_argument("-f", "--format", choices={"json", "jsonl"}, default="jsonl")
 
     def handle(self, format, **options):
-        format = getattr(self, "format_{}".format(format))
-        format(objects=self.get_objects(), output=sys.stdout)
+        formatter = getattr(self, f"format_{format}")
+        formatter(objects=self.get_objects(), output=sys.stdout)
 
     def get_objects(self):
         for entry in extract_urls():

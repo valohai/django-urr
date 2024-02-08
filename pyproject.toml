@@ -41,4 +41,9 @@ norecursedirs = [".git", ".tox"]
 line-length = 120
 
 [tool.ruff.lint]
-extend-select = ["COM", "I"]
+extend-select = [
+    "COM",
+    "I",
+    "PGH",
+    "UP",
+]

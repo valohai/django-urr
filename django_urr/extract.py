@@ -1,6 +1,6 @@
 import itertools
 
-import django.urls as urls
+from django import urls
 from django.utils.functional import cached_property
 from django.utils.regex_helper import normalize
 
@@ -32,15 +32,14 @@ class URLEntry:
     @cached_property
     def qualified_name(self):
         if self.name and self.namespace:
-            return "{namespace}:{name}".format(namespace=self.namespace, name=self.name)
+            return f"{self.namespace}:{self.name}"
         return self.name
 
     @cached_property
     def regexes(self):
         if DJANGO_2:
             return [bit.pattern.regex for bit in self.bits]
-        else:
-            return [bit.regex for bit in self.bits]
+        return [bit.regex for bit in self.bits]
 
     @cached_property
     def merged_pattern(self):

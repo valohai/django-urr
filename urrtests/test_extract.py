@@ -18,7 +18,8 @@ def test_qnames():
 def test_named_groups(urls_by_qname):
     assert urls_by_qname["test1"].named_groups == {"a", "b", "c"}
     assert urls_by_qname["test2"].named_groups == {"a", "b", "c"}
-    assert urls_by_qname["test3"].group_count == 3 and not urls_by_qname["test3"].named_groups
+    assert urls_by_qname["test3"].group_count == 3
+    assert not urls_by_qname["test3"].named_groups
 
 
 def test_merged_pattern(urls_by_qname):
