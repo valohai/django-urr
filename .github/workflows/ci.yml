@@ -22,3 +22,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pre-commit/action@v3.0.0
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install build && python -m build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: wheel
+          path: dist/*.whl

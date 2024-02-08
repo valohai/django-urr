@@ -1,3 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "django-urr"
+dynamic = ["version"]
+description = "URL resolver utilities for Django"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Valohai", email = "info@valohai.com" },
+]
+maintainers = [
+    { name = "Aarni Koskela", email = "akx@iki.fi" },
+]
+dependencies = [
+    "Django",
+]
+
+[project.urls]
+Homepage = "https://github.com/valohai/django-urr"
+
+[tool.hatch.version]
+path = "django_urr/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/django_urr",
+]
+
+[tool.pytest.ini_options]
+django_settings_module = "urrtests.settings"
+norecursedirs = [".git", ".tox"]
+
 [tool.ruff]
 line-length = 120
 
